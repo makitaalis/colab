@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>{{ title }}</title>
+  <style>{{ v2_css | safe }}</style>
+</head>
+<body data-ui-build="{{ ui_build }}" data-theme="{{ theme }}" class="v2App">
+  <a class="v2SkipLink" href="#v2Main">Перейти до контенту</a>
+  <div class="v2Shell">
+    <aside class="v2Sidebar" aria-label="Навігація адмінки v2">
+      <div class="v2SidebarTop">
+        <div class="v2Brand">
+          <div class="v2BrandName">Passengers</div>
+          <div class="v2BrandSub">{{ kicker }}</div>
+        </div>
+        <label class="v2NavSearchWrap" for="v2NavSearch">
+          <span class="v2SrOnly">Пошук меню</span>
+          <input id="v2NavSearch" class="v2NavSearch" type="search" placeholder="Пошук меню" aria-describedby="v2NavSearchStatus" />
+        </label>
+        <div id="v2NavSearchStatus" class="v2NavSearchStatus" aria-live="polite"></div>
+      </div>
+
+      <nav class="v2Nav" aria-label="Меню">
+        {% for group in nav_groups %}
+          <details class="v2NavGroup" {% if group.open %}open{% endif %}>
+            <summary class="v2NavGroupTitle">{{ group.title }}</summary>
+            <div class="v2NavItems">
+              {% for item in group["items"] %}
+                <a class="v2NavItem{% if item["active"] %} active{% endif %}" href="{{ item["href"] }}">{{ item["label"] }}</a>
+              {% endfor %}
+            </div>
+          </details>
+        {% endfor %}
+      </nav>
+
+      <div class="v2SidebarFoot">
+        <div class="v2MetaLine">UI: <code>{{ ui_build }}</code></div>
+        <div class="v2MetaLine"><a class="v2MutedLink" href="/admin">Відкрити v1</a></div>
+      </div>
+    </aside>
+
+    <main id="v2Main" class="v2Main" tabindex="-1">
+      <header class="v2Header">
+        <div class="v2HeaderTop">
+          <div class="v2TitleBlock">
+            <h1 class="v2Title">{{ header_title }}</h1>
+          </div>
+          <div class="v2HeaderActions">
+            {% block header_actions %}{% endblock %}
+          </div>
+        </div>
+
+        {% if chips %}
+          <div class="v2Chips" aria-label="Контекст">
+            {% for chip in chips %}
+              <span
+                {% if chip.id %}id="{{ chip.id }}"{% endif %}
+                class="v2Chip v2Chip--{{ chip.tone|default('neutral') }} v2Chip--dark"
+                {% if chip.hx_get %}hx-get="{{ chip.hx_get }}"{% endif %}
+                {% if chip.hx_trigger %}hx-trigger="{{ chip.hx_trigger }}"{% endif %}
+                {% if chip.hx_swap %}hx-swap="{{ chip.hx_swap }}"{% endif %}
+              >{{ chip.text }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% block subnav %}{% endblock %}
+        {% block toolbar %}{% endblock %}
+      </header>
+
+      <section class="v2Body">
+        {% block body %}{% endblock %}
+      </section>
+    </main>
+  </div>
+
+  <script>{{ htmx_js | safe }}</script>
+  <script>{{ v2_js | safe }}</script>
+</body>
+</html>

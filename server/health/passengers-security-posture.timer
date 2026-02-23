@@ -1,0 +1,12 @@
+[Unit]
+Description=Passengers server security posture check timer
+
+[Timer]
+OnBootSec=2m
+OnUnitActiveSec=10m
+RandomizedDelaySec=30s
+Persistent=true
+Unit=passengers-security-posture.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,16 @@
+# Ultralytics runs / artifacts
+runs/
+
+# Local weights and exports
+weights/
+*.pt
+*.onnx
+*.engine
+*.tflite
+*.torchscript
+
+# Local notes
+*.log
+*.csv
+*.json
+

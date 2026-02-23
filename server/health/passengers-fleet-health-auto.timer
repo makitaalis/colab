@@ -1,0 +1,12 @@
+[Unit]
+Description=Passengers fleet health auto notification timer
+
+[Timer]
+OnBootSec=45s
+OnUnitActiveSec=60s
+RandomizedDelaySec=10s
+Persistent=true
+Unit=passengers-fleet-health-auto.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,26 @@
+{% extends "client/layout.html" %}
+
+{% block toolbar %}
+  <div class="v2Toolbar">
+    <div class="v2ToolbarMain">
+      <a class="v2Btn v2Btn--ghost" href="/client2">Огляд</a>
+      <a class="v2Btn v2Btn--ghost" href="/client">v1</a>
+    </div>
+    <div class="v2ToolbarMeta">
+      <span class="v2Status">v2</span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <div class="v2Card">
+    <div class="v2CardTitle">Сторінка в розробці</div>
+    <div class="v2CardText">
+      Це placeholder для v2. Далі сюди підключимо компоненти і дані через HTMX.
+    </div>
+    <div class="v2CardActions">
+      <a class="v2Btn v2Btn--primary" href="/client2">Повернутися на Огляд</a>
+    </div>
+  </div>
+{% endblock %}
+

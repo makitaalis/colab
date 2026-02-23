@@ -1,0 +1,10 @@
+# Client support onboarding matrix (step-11)
+# Format:
+# actor|password_file|scope_entries
+#
+# scope_entries: central_id[:vehicle_id] list split by ';' or ','
+# actor policy: support-<system_id>
+#
+# Example records:
+# support-sys-0001|pass client support sys-0001 panel|sys-0001
+# support-sys-0002|pass client support sys-0002 panel|sys-0002;sys-0002:veh-14

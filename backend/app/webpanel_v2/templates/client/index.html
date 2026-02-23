@@ -1,0 +1,39 @@
+{% extends "client/layout.html" %}
+
+{% block toolbar %}
+  <div class="v2Toolbar">
+    <div class="v2ToolbarMain">
+      <a class="v2Btn v2Btn--ghost" href="/client2/vehicles">Мої транспорти</a>
+      <a class="v2Btn v2Btn--ghost" href="/client2/tickets">Звернення</a>
+      <button class="v2Btn" hx-get="/client2/_fragment/ping" hx-target="#v2Ping" hx-swap="innerHTML">Ping</button>
+    </div>
+    <div class="v2ToolbarMeta">
+      <span id="v2Ping" class="v2Status">готово</span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <div class="v2Grid">
+    <div class="v2Card">
+      <div class="v2CardTitle">Кабінет v2</div>
+      <div class="v2CardText">
+        Це нова версія клієнтського кабінету: чиста навігація, однакові компоненти, мінімум шуму.
+      </div>
+      <div class="v2CardActions">
+        <a class="v2Btn v2Btn--primary" href="/client2/vehicles">Перейти до транспорту</a>
+        <a class="v2Btn" href="/client">Повернутися у v1</a>
+      </div>
+    </div>
+
+    <div class="v2Card">
+      <div class="v2CardTitle">Що далі</div>
+      <ol class="v2List">
+        <li>Підключити real-data фрагменти через HTMX</li>
+        <li>Таблиці: empty/loading/error</li>
+        <li>Профіль та сповіщення (role-aware)</li>
+      </ol>
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,12 @@
+services:
+  api:
+    build:
+      context: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - passengers_data:/data
+
+volumes:
+  passengers_data:

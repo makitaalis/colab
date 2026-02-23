@@ -1,0 +1,34 @@
+{% extends "admin/layout.html" %}
+
+{% block toolbar %}
+  <div class="v2Toolbar">
+    <div class="v2ToolbarMain">
+      <button
+        class="v2Btn v2Btn--ghost"
+        hx-get="/admin2/_fragment/fleet/monitor"
+        hx-target="#v2Fleet"
+        hx-swap="innerHTML"
+        hx-indicator="#v2FleetLoading"
+      >Оновити</button>
+      <a class="v2Btn v2Btn--ghost" href="/admin2/fleet/alerts">Алерти</a>
+      <a class="v2Btn v2Btn--ghost" href="/admin2/fleet/incidents">Інциденти</a>
+      <a class="v2Btn" href="/admin/fleet">Відкрити v1</a>
+    </div>
+    <div class="v2ToolbarMeta">
+      <span class="v2Status">auto: 10s</span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <div
+    id="v2Fleet"
+    hx-get="/admin2/_fragment/fleet/monitor"
+    hx-trigger="load, every 10s"
+    hx-swap="innerHTML"
+    hx-indicator="#v2FleetLoading"
+  >
+    <div id="v2FleetLoading" class="v2Loading htmx-indicator">Завантаження...</div>
+  </div>
+{% endblock %}
+

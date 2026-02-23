@@ -1,0 +1,7 @@
+[nginx-limit-req]
+enabled = true
+port = 8443
+logpath = /var/log/nginx/error.log
+maxretry = 30
+findtime = 5m
+bantime = 2h

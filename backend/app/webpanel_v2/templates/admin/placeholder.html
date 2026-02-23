@@ -1,0 +1,26 @@
+{% extends "admin/layout.html" %}
+
+{% block toolbar %}
+  <div class="v2Toolbar">
+    <div class="v2ToolbarMain">
+      <a class="v2Btn v2Btn--ghost" href="/admin2">Огляд</a>
+      <a class="v2Btn v2Btn--ghost" href="/admin">v1</a>
+    </div>
+    <div class="v2ToolbarMeta">
+      <span class="v2Status">v2</span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <div class="v2Card">
+    <div class="v2CardTitle">Сторінка в розробці</div>
+    <div class="v2CardText">
+      Тут буде v2-версія домену. Зараз важливо зафіксувати shell, навігацію і базові компоненти.
+    </div>
+    <div class="v2CardActions">
+      <a class="v2Btn v2Btn--primary" href="/admin2">Повернутися на Огляд</a>
+    </div>
+  </div>
+{% endblock %}
+

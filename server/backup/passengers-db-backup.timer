@@ -1,0 +1,11 @@
+[Unit]
+Description=Passengers backend DB backup timer
+
+[Timer]
+OnCalendar=*:0/30
+RandomizedDelaySec=120
+Persistent=true
+Unit=passengers-db-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+services:
+  api:
+    ports:
+      - "10.66.0.1:80:8000"
+    volumes:
+      - /opt/passengers-backend/wg:/wg:ro
+    environment:
+      WG_STATUS_PATH: /wg/peers.json
+      WG_CONF_PATH: /wg/wg0.conf.redacted

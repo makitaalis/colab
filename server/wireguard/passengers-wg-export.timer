@@ -1,0 +1,11 @@
+[Unit]
+Description=Passengers WireGuard status export (timer)
+
+[Timer]
+OnBootSec=10s
+OnUnitActiveSec=15s
+Unit=passengers-wg-export.service
+
+[Install]
+WantedBy=timers.target
+

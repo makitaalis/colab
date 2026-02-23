@@ -1,0 +1,20 @@
+system_id,vehicle_id,wg_ip,server_endpoint,status,notes
+sys-0002,bus-002_AA0002BB,10.66.0.12,207.180.213.225:51820,planned,rollout-check without modules/cameras
+sys-0003,bus-003_FILL_PLATE,10.66.0.13,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0004,bus-004_FILL_PLATE,10.66.0.14,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0005,bus-005_FILL_PLATE,10.66.0.15,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0006,bus-006_FILL_PLATE,10.66.0.16,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0007,bus-007_FILL_PLATE,10.66.0.17,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0008,bus-008_FILL_PLATE,10.66.0.18,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0009,bus-009_FILL_PLATE,10.66.0.19,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0010,bus-010_FILL_PLATE,10.66.0.20,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0011,bus-011_FILL_PLATE,10.66.0.21,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0012,bus-012_FILL_PLATE,10.66.0.22,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0013,bus-013_FILL_PLATE,10.66.0.23,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0014,bus-014_FILL_PLATE,10.66.0.24,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0015,bus-015_FILL_PLATE,10.66.0.25,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0016,bus-016_FILL_PLATE,10.66.0.26,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0017,bus-017_FILL_PLATE,10.66.0.27,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0018,bus-018_FILL_PLATE,10.66.0.28,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0019,bus-019_FILL_PLATE,10.66.0.29,207.180.213.225:51820,planned,pre-provision without modules/cameras
+sys-0020,bus-020_FILL_PLATE,10.66.0.30,207.180.213.225:51820,planned,pre-provision without modules/cameras

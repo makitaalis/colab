@@ -1,0 +1,9 @@
+[Unit]
+Description=Passengers fleet health auto notification
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/opt/passengers-backend/ops/passengers-fleet-health-auto.sh

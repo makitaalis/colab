@@ -1,0 +1,48 @@
+{% extends "admin/layout.html" %}
+
+{% block toolbar %}
+  <div class="v2Toolbar">
+    <div class="v2ToolbarMain">
+      <a class="v2Btn v2Btn--ghost" href="/admin2/fleet">Флот</a>
+      <a class="v2Btn v2Btn--ghost" href="/admin2/fleet/incidents">Інциденти</a>
+      <a class="v2Btn v2Btn--ghost" href="/admin2/wg">WireGuard</a>
+      <button class="v2Btn" hx-get="/admin2/_fragment/ping" hx-target="#v2Ping" hx-swap="innerHTML">Ping</button>
+    </div>
+    <div class="v2ToolbarMeta">
+      <span id="v2Ping" class="v2Status">готово</span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <div class="v2Grid">
+    <div class="v2Card">
+      <div class="v2CardTitle">Чистий старт v2</div>
+      <div class="v2CardText">
+        Це нова web-панель, яка живе паралельно з v1. Міграція йде доменами, без даунтайму і без змішування стилів.
+      </div>
+      <div class="v2CardActions">
+        <a class="v2Btn v2Btn--primary" href="/admin2/fleet">Відкрити “Флот”</a>
+        <a class="v2Btn" href="/admin">Повернутися у v1</a>
+      </div>
+    </div>
+
+    <div class="v2Card">
+      <div class="v2CardTitle">План міграції</div>
+      <ol class="v2List">
+        <li>Shell + tokens + компоненти</li>
+        <li>Меню IA (2 рівні)</li>
+        <li>Флот: моніторинг + інциденти</li>
+        <li>Сповіщення + KPI</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="v2Card v2Card--wide">
+    <div class="v2CardTitle">Дані</div>
+    <div class="v2Empty">
+      Поки що це каркас. Наступний крок: підключити реальні API та таблиці через HTMX (partial updates без SPA).
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,10 @@
+# Ultralytics YOLO dataset config (detect)
+# Official format: https://docs.ultralytics.com/datasets/detect/ (see 'data.yaml').
+path: /home/alis/Документы/DataSet/brainwash.v1i.yolov8
+train: train/images
+val: valid/images
+test: test/images
+
+names:
+  0: head
+

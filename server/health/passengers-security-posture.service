@@ -1,0 +1,9 @@
+[Unit]
+Description=Passengers server security posture check
+After=network-online.target docker.service nginx.service fail2ban.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/opt/passengers-backend/ops/passengers-security-posture.sh

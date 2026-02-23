@@ -1,0 +1,64 @@
+<div class="v2Grid">
+  <div class="v2Card v2Card--kpi">
+    <div class="v2CardTitle">Централи</div>
+    <div class="v2KpiValue">{{ fleet_total }}</div>
+    <div class="v2KpiMeta">
+      <span class="v2Pill v2Pill--bad">bad {{ fleet_bad }}</span>
+      <span class="v2Pill v2Pill--warn">warn {{ fleet_warn }}</span>
+      <span class="v2Pill">pending {{ fleet_pending }}</span>
+    </div>
+  </div>
+
+  <div class="v2Card v2Card--kpi">
+    <div class="v2CardTitle">Інциденти</div>
+    <div class="v2KpiValue">{{ incident_total }}</div>
+    <div class="v2KpiMeta">
+      <span class="v2Pill v2Pill--bad">bad {{ incident_bad }}</span>
+      <span class="v2Pill v2Pill--warn">warn {{ incident_warn }}</span>
+      <a class="v2Link" href="/admin2/fleet/incidents">відкрити</a>
+    </div>
+  </div>
+
+  <div class="v2Card v2Card--kpi">
+    <div class="v2CardTitle">Оновлено</div>
+    <div class="v2KpiValue v2KpiValue--sm">{{ generated_at }}</div>
+    <div class="v2CardText">джерело: sqlite snapshot</div>
+  </div>
+</div>
+
+<div class="v2Card v2Card--wide">
+  <div class="v2CardTitle">Централи (top {{ rows|length }})</div>
+  {% if rows %}
+    <div class="v2TableWrap">
+      <table class="v2Table">
+        <thead>
+          <tr>
+            <th>central</th>
+            <th>vehicle</th>
+            <th>age</th>
+            <th>sev</th>
+            <th>pending</th>
+            <th>bad</th>
+            <th>warn</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td><a class="v2Link" href="{{ row.v1_href }}">{{ row.central_id }}</a></td>
+              <td class="v2Muted">{{ row.vehicle_id }}</td>
+              <td class="v2Mono">{{ row.age }}</td>
+              <td><span class="v2Pill v2Pill--{{ row.severity }}">{{ row.severity }}</span></td>
+              <td class="v2Mono">{{ row.pending }}</td>
+              <td class="v2Mono">{{ row.alerts_bad }}</td>
+              <td class="v2Mono">{{ row.alerts_warn }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="v2Empty">Немає даних. Можливо, ще не було heartbeat у базі.</div>
+  {% endif %}
+</div>
+

@@ -1,0 +1,42 @@
+.venv/
+.idea/
+__pycache__/
+*.pyc
+
+# Auto-generated reports
+Docs/auto/*
+!Docs/auto/web-panel/
+!Docs/auto/web-panel/**
+
+# Local password files (never commit)
+pass *panel*
+
+# Backend runtime files (do not commit)
+backend/.env
+backend/data/
+
+# Fleet generated bundles
+fleet/out/
+
+# Fleet secrets (local only)
+fleet/secrets/*
+!fleet/secrets/.gitkeep
+!fleet/secrets/README.md
+
+# Large binary artifacts (store outside git or use Git LFS)
+*.7z
+*.zip
+*.img
+*.iso
+*.blob
+
+# Local OS images/extracted bundles (too large for git)
+orangepizero3_1_0_4_debian_bookworm/
+
+# Model source weights (keep local; final compiled archives can live in mvp/models)
+mvp/models/src/
+
+# Local model conversion workspace
+tools/modelconverter/shared_with_container/outputs/
+tools/modelconverter/shared_with_container/models/
+tools/modelconverter/shared_with_container/shared_with_container/
