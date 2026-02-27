@@ -83,13 +83,38 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Preflight checks for Ultralytics YOLO training (dataset + weights).")
     ap.add_argument("--dataset", required=True, help="Dataset root (contains train/valid/test).")
     ap.add_argument("--data-yaml", required=True, help="Ultralytics data.yaml to be used for training.")
-    ap.add_argument("--base-weights", required=True, help="Base weights (.pt) to start from.")
+    ap.add_argument(
+        "--base-weights",
+        required=True,
+        help=(
+            "Base weights to start from. Either a local .pt path or a model spec (e.g. yolov8n.pt) "
+            "that Ultralytics can resolve/download."
+        ),
+    )
     ap.add_argument("--out", required=True, help="Write preflight JSON to this path.")
     args = ap.parse_args()
 
     dataset = Path(args.dataset).expanduser().resolve()
     data_yaml = Path(args.data_yaml).expanduser().resolve()
-    base_weights = Path(args.base_weights).expanduser().resolve()
+    base_weights_raw = str(args.base_weights)
+    base_weights_path: Path | None = None
+    base_weights_kind = "unknown"
+
+    if base_weights_raw.startswith(("http://", "https://")):
+        base_weights_kind = "url"
+    else:
+        candidate = Path(base_weights_raw).expanduser()
+        if candidate.is_absolute() or ("/" in base_weights_raw) or ("\\" in base_weights_raw) or base_weights_raw.startswith("."):
+            # Looks like a filesystem path.
+            base_weights_kind = "path"
+            base_weights_path = candidate.resolve()
+        else:
+            # Could be a local filename in CWD OR an Ultralytics model spec.
+            if candidate.exists():
+                base_weights_kind = "file"
+                base_weights_path = candidate.resolve()
+            else:
+                base_weights_kind = "spec"
     out_path = Path(args.out).expanduser().resolve()
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -100,8 +125,18 @@ def main() -> int:
         issues.append(f"dataset root not found: {dataset}")
     if not data_yaml.exists():
         issues.append(f"data yaml not found: {data_yaml}")
-    if not base_weights.exists():
-        issues.append(f"base weights not found: {base_weights}")
+    if base_weights_kind in {"path", "file"}:
+        if base_weights_path is None or not base_weights_path.exists():
+            issues.append(f"base weights not found: {base_weights_path}")
+    elif base_weights_kind == "url":
+        warnings.append("base weights is a URL; skipping local file checks and hashing")
+    elif base_weights_kind == "spec":
+        warnings.append(
+            "base weights looks like an Ultralytics model spec (e.g. yolov8n.pt); "
+            "skipping local file checks and hashing"
+        )
+    else:
+        warnings.append("base weights kind could not be determined; skipping local file checks and hashing")
 
     yaml_declared_path: Path | None = None
     yaml_splits: dict[str, str] = {}
@@ -256,11 +291,15 @@ def main() -> int:
         "paths": {
             "dataset": str(dataset),
             "data_yaml": str(data_yaml),
-            "base_weights": str(base_weights),
+            "base_weights_raw": base_weights_raw,
+            "base_weights_kind": base_weights_kind,
+            "base_weights": str(base_weights_path) if base_weights_path is not None else "",
         },
         "hashes": {
             "data_yaml_sha256": sha256_file(data_yaml) if data_yaml.exists() else "",
-            "base_weights_sha256": sha256_file(base_weights) if base_weights.exists() else "",
+            "base_weights_sha256": sha256_file(base_weights_path)
+            if base_weights_path is not None and base_weights_path.exists()
+            else "",
         },
         "dataset": {
             "splits": {k: asdict(v) for k, v in split_stats.items()},

@@ -87,6 +87,7 @@ if [[ "${BATCH}" == "auto" ]]; then
 fi
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "${REPO_ROOT}"
 PY="${REPO_ROOT}/.venv/bin/python"
 YOLO_BIN="${REPO_ROOT}/.venv/bin/yolo"
 if [[ ! -x "${PY}" ]]; then
@@ -105,8 +106,34 @@ abs_path() {
   fi
 }
 
+resolve_model_arg() {
+  # Accept either:
+  # - path to local weights (.pt)
+  # - model spec (e.g. yolov8n.pt) which Ultralytics can auto-download/resolve
+  # - URL
+  local m="$1"
+  if [[ "${m}" == http://* || "${m}" == https://* ]]; then
+    printf '%s' "${m}"
+    return 0
+  fi
+  if [[ "${m}" == /* ]]; then
+    printf '%s' "${m}"
+    return 0
+  fi
+  if [[ "${m}" == *"/"* ]]; then
+    printf '%s' "${REPO_ROOT}/${m}"
+    return 0
+  fi
+  if [[ -f "${REPO_ROOT}/${m}" ]]; then
+    printf '%s' "${REPO_ROOT}/${m}"
+    return 0
+  fi
+  # Fallback: treat as Ultralytics model spec (yolov8n.pt, etc.)
+  printf '%s' "${m}"
+}
+
 DATA_PATH="$(abs_path "${DATA}")"
-MODEL_PATH="$(abs_path "${MODEL}")"
+MODEL_ARG="$(resolve_model_arg "${MODEL}")"
 PROJECT_PATH="$(abs_path "${PROJECT}")"
 ts="$(date -u +%Y%m%dT%H%M%SZ)"
 name_sanitized="$(printf '%s' "${NAME}" | tr ' ' '_' | tr -cd 'A-Za-z0-9._-')"
@@ -139,7 +166,7 @@ Label: ${name_sanitized}
 
 - Dataset root: ${DATASET_ROOT}
 - Data yaml: ${DATA_PATH}
-- Base weights: ${MODEL_PATH}
+- Base weights: ${MODEL_ARG}
 - Ultralytics project dir: ${PROJECT_PATH}
 
 ## Run sequence (recommended)
@@ -169,7 +196,7 @@ set +e
 "${PY}" "${REPO_ROOT}/scripts/yolo_train_preflight.py" \
   --dataset "${DATASET_ROOT}" \
   --data-yaml "${DATA_PATH}" \
-  --base-weights "${MODEL_PATH}" \
+  --base-weights "${MODEL_ARG}" \
   --out "${RUN_DOC_DIR}/preflight.json" > "${RUN_DOC_DIR}/preflight.stdout.json"
 preflight_rc="$?"
 set -e
@@ -184,7 +211,7 @@ mkdir -p "${YOLO_PROJECT}"
 
 CMD=(
   "${YOLO_BIN}" detect train
-  model="${MODEL_PATH}"
+  model="${MODEL_ARG}"
   data="${DATA_PATH}"
   imgsz="${IMGSZ}"
   epochs="${EPOCHS}"
