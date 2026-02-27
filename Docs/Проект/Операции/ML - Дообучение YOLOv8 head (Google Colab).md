@@ -91,7 +91,7 @@ drive.mount("/content/drive")
 ```bash
 %cd /content
 !rm -rf OrangePi_passangers
-!git clone --depth 1 https://github.com/<USER_OR_ORG>/OrangePi_passangers.git
+!git clone --depth 1 https://github.com/makitaalis/colab.git OrangePi_passangers
 %cd OrangePi_passangers
 !git rev-parse --short HEAD
 ```
