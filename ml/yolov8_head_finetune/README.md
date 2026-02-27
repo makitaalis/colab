@@ -16,3 +16,6 @@
 - `weights/` — локальные веса (base/best/last и т.п.).
 - `runs/` — вывод Ultralytics (`project=...` направляем сюда).
 
+Colab:
+- Runbook: `Docs/Проект/Операции/ML - Дообучение YOLOv8 head (Google Colab).md`
+- Notebook: `colab/yolo_head_runner.ipynb`

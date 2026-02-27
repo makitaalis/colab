@@ -24,6 +24,7 @@ Options:
   --dataset <path>    Dataset root (default: /home/alis/Документы/DataSet/brainwash.v1i.yolov8)
   --data <yaml>       Dataset yaml (default: ml/yolov8_head_finetune/data_head.yaml)
   --model <pt>        Base weights (default: ml/yolov8_head_finetune/weights/base/yolov8_head_scut_nano.pt)
+  --project <path>    Ultralytics runs project dir (default: ml/yolov8_head_finetune/runs)
   --imgsz <n>         Image size (default: 640)
   --epochs <n>        Epochs (default: 80)
   --batch <n|auto>    Batch size (default: auto; mapped to -1)
@@ -36,6 +37,7 @@ Options:
 Examples:
   ./scripts/yolo_train_run.sh --name baseline640 --imgsz 640 --epochs 80
   ./scripts/yolo_train_run.sh --name baseline640 --imgsz 640 --epochs 80 --execute
+  ./scripts/yolo_train_run.sh --name long640 --imgsz 640 --epochs 80 --project /home/alis/ml/runs/yolov8-head --execute
 USAGE
 }
 
@@ -43,6 +45,7 @@ NAME=""
 DATASET_ROOT="/home/alis/Документы/DataSet/brainwash.v1i.yolov8"
 DATA="ml/yolov8_head_finetune/data_head.yaml"
 MODEL="ml/yolov8_head_finetune/weights/base/yolov8_head_scut_nano.pt"
+PROJECT="ml/yolov8_head_finetune/runs"
 IMGSZ="640"
 EPOCHS="80"
 BATCH="auto"
@@ -58,6 +61,7 @@ while [[ $# -gt 0 ]]; do
     --dataset) DATASET_ROOT="${2:-}"; shift 2 ;;
     --data) DATA="${2:-}"; shift 2 ;;
     --model) MODEL="${2:-}"; shift 2 ;;
+    --project) PROJECT="${2:-}"; shift 2 ;;
     --imgsz) IMGSZ="${2:-}"; shift 2 ;;
     --epochs) EPOCHS="${2:-}"; shift 2 ;;
     --batch) BATCH="${2:-}"; shift 2 ;;
@@ -103,6 +107,7 @@ abs_path() {
 
 DATA_PATH="$(abs_path "${DATA}")"
 MODEL_PATH="$(abs_path "${MODEL}")"
+PROJECT_PATH="$(abs_path "${PROJECT}")"
 ts="$(date -u +%Y%m%dT%H%M%SZ)"
 name_sanitized="$(printf '%s' "${NAME}" | tr ' ' '_' | tr -cd 'A-Za-z0-9._-')"
 if [[ -z "${name_sanitized}" ]]; then name_sanitized="run"; fi
@@ -135,6 +140,7 @@ Label: ${name_sanitized}
 - Dataset root: ${DATASET_ROOT}
 - Data yaml: ${DATA_PATH}
 - Base weights: ${MODEL_PATH}
+- Ultralytics project dir: ${PROJECT_PATH}
 
 ## Run sequence (recommended)
 
@@ -173,7 +179,7 @@ if [[ "${EXECUTE}" == "1" && "${preflight_rc}" != "0" ]]; then
   exit 2
 fi
 
-YOLO_PROJECT="${REPO_ROOT}/ml/yolov8_head_finetune/runs"
+YOLO_PROJECT="${PROJECT_PATH}"
 mkdir -p "${YOLO_PROJECT}"
 
 CMD=(
